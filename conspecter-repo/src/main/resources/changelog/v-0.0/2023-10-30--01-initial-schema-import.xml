@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <preConditions>
+        <or>
+            <runningAs username="server"/>
+            <runningAs username="test"/>
+        </or>
+    </preConditions>
+
+    <changeSet id="repo-table" author="panart">
+        <createTable tableName="repo">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false" unique="true"
+                             uniqueConstraintName="author-name_unique"/>
+            </column>
+            <column name="author" type="varchar(50)">
+                <constraints nullable="false" unique="true"
+                             uniqueConstraintName="author-name_unique"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="conspect-table" author="panart">
+        <createTable tableName="conspect">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false" unique="true"
+                             uniqueConstraintName="repo-name_unique"/>
+            </column>
+            <column name="repo_id" type="int">
+                <constraints foreignKeyName="fk_repo" references="repo(id)"
+                             deleteCascade="true"
+                             unique="true" uniqueConstraintName="repo-name_unique"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="task-table" author="panart">
+        <createTable tableName="task">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="text" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="answer" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="conspect_id" type="int">
+                <constraints foreignKeyName="fk_conspect" references="conspect(id)"
+                             deleteCascade="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="user-table" author="panart">
+        <createTable tableName="user_table">
+            <column name="name" type="varchar(50)">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="task_id" type="int">
+                <constraints foreignKeyName="fk_task_current" references="task(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="user_task-table" author="panart">
+        <createTable tableName="user_task">
+            <column name="user_id" type="varchar(50)">
+                <constraints foreignKeyName="fk_user_task" references="user_table(name)"/>
+            </column>
+            <column name="task_id" type="int">
+                <constraints foreignKeyName="fk_task_user" references="task(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet  id="test-values"  author="panart">
+        <insert tableName="repo">
+            <column name="name" value="logic"/>
+            <column name="author" value="shd"/>
+        </insert>
+        <insert tableName="conspect">
+            <column name="name" value="Yekaterinburg"/>
+            <column name="repo_id" value="1"/>
+        </insert>
+        <insert tableName="task">
+            <column name="text" value="yes it is"/>
+            <column name="answer" value="1"/>
+            <column name="conspect_id" value="1"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

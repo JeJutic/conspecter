@@ -1,0 +1,18 @@
+#app:
+#  repository-service:
+#    base-url: http://localhost:port/api
+
+spring:
+  liquibase:
+    change-log: classpath:changelog/changelog-root.xml
+  datasource:
+    hikari:
+      connection-timeout: 3000
+      maxLifetime: 600000
+resilience4j:
+  ratelimiter:
+    instances:
+      register:
+        limitForPeriod: 10
+        limitRefreshPeriod: 10s
+        timeoutDuration: 100ms

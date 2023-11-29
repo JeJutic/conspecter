@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>task</title>
+</head>
+<body>
+<main>
+    <pre th:text="${task.text}"></pre>
+    <form method="post">
+        <label for="solution"></label>
+        <input name="solution"
+               id="solution"
+               type="text"
+               placeholder="Enter skipped parts here, separate it by whitespaces">
+        <input type="submit" value="Submit">
+    </form>
+<!--    <a target=”_blank” th:href="@{./view/__${task.id}__}">Pdf view</a>-->
+</main>
+</body>
+</html>

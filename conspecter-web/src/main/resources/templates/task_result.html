@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>task result</title>
+</head>
+<body>
+<main>
+    <a href="../../">Main menu</a>
+    <pre th:text="${task.text}"></pre>
+    <p th:text="${'Your solution - ' + solution}"></p>
+    <p th:text="${'Right answer - ' + solvedTask.answer}"></p>
+    <p th:text="${solvedTask.score + '/' + solvedTask.outOf()}"></p>
+    <p th:text="${result}"></p>
+    <a href="">Task from the same conspect</a>
+</main>
+</body>
+</html>

@@ -1,0 +1,42 @@
+version: '3'
+services:
+  web:
+    container_name: web
+    build: ./conspecter-web
+    ports:
+      - "8080:8080"
+    depends_on:
+      - "web-db"
+      - "repo"
+    restart: on-failure:1
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://web-db:5432/conspecter
+      - SPRING_DATASOURCE_USERNAME=server
+      - SPRING_DATASOURCE_PASSWORD=server
+      - APP_REPOSITORY-SERVICE_BASE-URL=http://repo:8080/api
+  web-db:
+    container_name: web-db
+    image: "postgres:13.1-alpine"
+    environment:
+      - POSTGRES_DB=conspecter
+      - POSTGRES_USER=server
+      - POSTGRES_PASSWORD=server
+  repo:
+    container_name: repo
+    build: ./conspecter-repo
+#    ports:
+#      - "8095:8080"
+    depends_on:
+      - "repo-db"
+    restart: on-failure:1
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://repo-db:5432/conspecter
+      - SPRING_DATASOURCE_USERNAME=server
+      - SPRING_DATASOURCE_PASSWORD=server
+  repo-db:
+    container_name: repo-db
+    image: "postgres:13.1-alpine"
+    environment:
+      - POSTGRES_DB=conspecter
+      - POSTGRES_USER=server
+      - POSTGRES_PASSWORD=server

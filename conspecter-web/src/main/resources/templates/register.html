@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+</head>
+<body>
+<main>
+    <form method="post">
+        <label for="login"></label>
+        <input name="login"
+               id="login"
+               type="text"
+               placeholder="login">
+        <label for="password"></label>
+        <input name="password"
+               id="password"
+               type="text"
+               placeholder="password">
+        <input type="submit" value="register">
+    </form>
+    <p th:text="${status}"></p>
+</main>
+</body>
+</html>

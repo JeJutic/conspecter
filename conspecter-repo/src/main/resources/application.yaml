@@ -1,0 +1,11 @@
+spring:
+  liquibase:
+    change-log: classpath:changelog/changelog-root.xml
+  datasource:
+    url: jdbc:tc:postgresql:11.1:///integration-tests-db
+#    username: server
+#    password: password
+#    driver-class-name: org.h2.Driver
+    hikari:
+      connection-timeout: 3000
+      maxLifetime: 600000

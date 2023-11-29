@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>conspects</title>
+</head>
+<body>
+<main>
+    <a href="/../">Back</a>
+
+    <div th:each="conspect : ${conspects}">
+        <a th:href="@{/__${repo}__/__${conspect.name}__}"
+           th:text="${conspect.name + ' ' + conspect.tasksSolved + '/' + conspect.taskCount}">
+        </a>
+    </div>
+</main>
+</body>
+</html>
