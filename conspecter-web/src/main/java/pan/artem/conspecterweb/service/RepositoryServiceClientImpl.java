@@ -1,6 +1,7 @@
 package pan.artem.conspecterweb.service;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import pan.artem.conspecterweb.dto.Conspect;
@@ -70,5 +71,18 @@ public class RepositoryServiceClientImpl implements RepositoryServiceClient {
                 Task.class,
                 username
         ));
+    }
+
+    @Override
+    public void uploadRepository(String author, String repoName, String url) {
+        restTemplate.exchange(
+                "/init/{author}/{repoName}?url={url}",
+                HttpMethod.POST,
+                null,
+                Void.class,
+                author,
+                repoName,
+                url
+        );
     }
 }

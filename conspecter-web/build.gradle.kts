@@ -28,6 +28,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-security")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.3")
+	implementation("io.swagger.core.v3:swagger-annotations:2.2.15")
 	implementation("org.liquibase:liquibase-core:4.24.0")
 	implementation("io.github.resilience4j:resilience4j-spring-boot3:2.1.0")
 	compileOnly("org.projectlombok:lombok")

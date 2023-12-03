@@ -1,7 +1,7 @@
 package pan.artem.conspecterrepo.service;
 
-import dto.SolvedTask;
-import dto.TaskDto;
+import dto.outer.SolvedTask;
+import dto.outer.TaskDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

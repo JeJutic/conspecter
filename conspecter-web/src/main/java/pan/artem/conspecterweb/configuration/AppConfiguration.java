@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 import pan.artem.conspecterweb.properties.AppProperties;
+import pan.artem.conspecterweb.service.handler.RepositoryServiceErrorHandler;
 
 @Configuration
 @EnableConfigurationProperties({
@@ -21,6 +22,7 @@ public class AppConfiguration {
     ) {
         return restTemplateBuilder
                 .rootUri(properties.getBaseUrl())
+                .errorHandler(new RepositoryServiceErrorHandler())
                 .build();
     }
 }

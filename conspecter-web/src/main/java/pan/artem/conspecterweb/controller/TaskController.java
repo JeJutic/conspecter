@@ -46,7 +46,7 @@ public class TaskController {
             Model model
     ) {
         String username = principal.getName();
-        logger.info("username: {}, solution: {}", username, solution);
+        logger.debug("username: {}, solution: {}", username, solution);
 
         var currentTask = repositoryServiceClient.getCurrentTask(username);
         if (currentTask.isEmpty()) {

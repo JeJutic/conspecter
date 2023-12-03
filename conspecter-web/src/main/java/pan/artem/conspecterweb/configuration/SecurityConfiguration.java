@@ -39,13 +39,14 @@ public class SecurityConfiguration {
         RequestMatcher isGet = request -> request.getMethod().equals("GET");
         RequestMatcher isApiPath = new AntPathRequestMatcher("/api/**");
         RequestMatcher isRegister = new AntPathRequestMatcher("/register");
+        RequestMatcher isUpload = new AntPathRequestMatcher("/upload/**");
 
          return httpSecurity.authorizeHttpRequests(authz -> authz
 //                         .anyRequest().hasAnyRole("USER", "ADMIN"))
-                .requestMatchers(request -> !isRegister.matches(request))
+                    .requestMatchers(isUpload)
+                         .hasRole("ADMIN")
+                    .requestMatchers(request -> !isRegister.matches(request))
                         .hasAnyRole("USER", "ADMIN")
-//                .requestMatchers(isApiPath)
-//                        .hasRole("ADMIN")
                          .anyRequest().permitAll())
                 .httpBasic(Customizer.withDefaults())
                  .csrf(AbstractHttpConfigurer::disable)

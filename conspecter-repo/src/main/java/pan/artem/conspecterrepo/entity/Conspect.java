@@ -22,6 +22,8 @@ public class Conspect {
     @JoinColumn(name = "repo_id")
     Repository repository;
 
-    @OneToMany(mappedBy = "conspect", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "conspect",
+            cascade = CascadeType.REMOVE
+    )
     private List<Task> tasks;
 }

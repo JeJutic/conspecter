@@ -1,7 +1,7 @@
 package pan.artem.conspecterrepo.service;
 
-import dto.SolvedTask;
-import dto.TaskDto;
+import dto.outer.SolvedTask;
+import dto.outer.TaskDto;
 
 public interface TaskService {
 

@@ -6,13 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-import pan.artem.conspecterrepo.repository.ConspectRepository;
-import pan.artem.conspecterrepo.repository.RepoRepository;
-import pan.artem.conspecterrepo.repository.TaskRepository;
-import pan.artem.conspecterrepo.repository.UserRepository;
+import pan.artem.conspecterrepo.TestDataSampleService;
 
 import static org.hamcrest.Matchers.hasSize;
-import static pan.artem.conspecterrepo.repository.ConspectRepositoryTest.initialData;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -23,22 +19,13 @@ class MainControllerTest {
     private static final String baseUrl = "/api/";
 
     @Autowired
-    private RepoRepository repoRepository;
-    @Autowired
-    private ConspectRepository conspectRepository;
-    @Autowired
-    private TaskRepository taskRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private TestDataSampleService testDataSampleService;
 
     @BeforeEach
     void setUp() {
-        userRepository.deleteAll();
-        repoRepository.deleteAll();
-
-        initialData(repoRepository, conspectRepository, taskRepository, userRepository);
+        testDataSampleService.setUp();
     }
 
     @Test
@@ -94,7 +81,8 @@ class MainControllerTest {
 
     @Test
     void sendSolution() throws Exception {
-        mockMvc.perform(get(baseUrl + "repo-name/conspect-name"));
+        mockMvc.perform(get(baseUrl + "repo-name/conspect-name")
+                .param("username", "user"));
 
         mockMvc.perform(post(baseUrl)
                         .param("username", "user")
@@ -107,7 +95,8 @@ class MainControllerTest {
 
     @Test
     void getCurrentTask() throws Exception {
-        mockMvc.perform(get(baseUrl + "repo-name/conspect-name"));
+        mockMvc.perform(get(baseUrl + "repo-name/conspect-name")
+                .param("username", "user"));
 
         mockMvc.perform(get(baseUrl + "current")
                         .param("username", "user"))

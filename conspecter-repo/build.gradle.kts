@@ -29,6 +29,8 @@ dependencies {
 	implementation("org.liquibase:liquibase-core:4.24.0")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.3")
 	implementation("io.swagger.core.v3:swagger-annotations:2.2.15")
+	implementation("commons-io:commons-io:2.15.1")
+	implementation("org.eclipse.jgit:org.eclipse.jgit:6.7.0.202309050840-r")
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("org.postgresql:postgresql")
 	annotationProcessor("org.projectlombok:lombok")

@@ -1,6 +1,6 @@
 package pan.artem.conspecterrepo.service;
 
-import dto.RepositoryDto;
+import dto.outer.RepositoryDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pan.artem.conspecterrepo.repository.RepoRepository;

@@ -18,4 +18,9 @@ public class MainController {
         model.addAttribute("repos", repos);
         return "main";
     }
+
+    @GetMapping("/**")
+    public String notFound() {
+        return "no_task_found";
+    }
 }
