@@ -17,7 +17,7 @@ public class ConspectsController {
 
 
     @GetMapping("/{repoName}")
-    public String showMain(
+    public String show(
             Principal principal,
             @PathVariable("repoName") String repoName,
             Model model

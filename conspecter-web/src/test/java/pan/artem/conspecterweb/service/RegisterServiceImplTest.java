@@ -40,4 +40,13 @@ class RegisterServiceImplTest {
         assertFalse(success);
         assertEquals("user", user.getName());
     }
+
+    @Test
+    void registerEmpty() {
+        assertAll(
+                () -> assertFalse(registerService.register("", "password")),
+                () -> assertFalse(registerService.register("user", "")),
+                () -> assertFalse(registerService.register("", ""))
+        );
+    }
 }

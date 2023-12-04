@@ -35,7 +35,7 @@ public class RegisterController {
         } else {
             model.addAttribute(
                     "status",
-                    "User with this login already exists"
+                    "Unable to register"
             );
         }
         return "register";

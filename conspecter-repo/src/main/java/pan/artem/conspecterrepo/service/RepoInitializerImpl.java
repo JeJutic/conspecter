@@ -38,20 +38,6 @@ public class RepoInitializerImpl implements RepoInitializer {
         }
     }
 
-    private void pullRepo(File path, String url) throws IOException, GitAPIException {
-        try (Git git = Git.open(path)) {
-            var config = git.getRepository().getConfig();
-            config.setString("branch", "master", "merge", "refs/heads/master");
-            config.setString("branch", "master", "remote", "origin");
-            config.setString("remote", "origin", "fetch", "+refs/heads/*:refs/remotes/origin/*");
-            config.setString("remote", "origin", "url", url);
-            config.save();
-
-            var result = git.pull().call();
-            logger.info("Git pull result: {}", result);
-        }
-    }
-
     @Transactional
     @Override
     public void initialize(String author, String repoName, String url) {
@@ -63,7 +49,7 @@ public class RepoInitializerImpl implements RepoInitializer {
             logger.info("Cloning repo {}:{} to {}...", author, repoName, path);
             try {
                 cloneRepo(path, url);
-            } catch (IOException | GitAPIException e) {
+            } catch (GitAPIException e) {
                 throw new RepoInitializationException(
                         "Unable to clone repository with path: " + path + " and url: " + url, e
                 );
@@ -73,14 +59,7 @@ public class RepoInitializerImpl implements RepoInitializer {
             repository.setName(repoName);
             repository = repoRepository.save(repository);
         } else {
-            try {
-                pullRepo(path, url);
-            } catch (IOException | GitAPIException e) {
-                throw new RepoInitializationException(
-                        "Unable to pull repository with path: " + path, e
-                );
-            }
-            repository = repos.get(0);
+            return;
         }
 
         Collection<File> files = FileUtils.listFiles(

@@ -55,7 +55,7 @@ public class ConspectAnalyzerImpl implements ConspectAnalyzer {
         return res.toString();
     }
 
-    private int removeFirstN(Deque<String> lines, int n) {  // TODO
+    private int removeFirstN(Deque<String> lines, int n) {
         int remCnt = 0;
         for (int i = 0; i < n; i++) {
             String removed = lines.removeFirst();
@@ -72,7 +72,11 @@ public class ConspectAnalyzerImpl implements ConspectAnalyzer {
         StringBuilder headers = new StringBuilder();
         String line;
         while (true) {
-            line = latexReader.readLine().get();    // FIXME
+            var optionalLine = latexReader.readLine();
+            if (optionalLine.isEmpty()) {
+                throw new ParseException("No \\begin{document} found", headers.length());
+            }
+            line = optionalLine.get();
             headers.append(line).append('\n');
             if (countCommandEntrances(line, "\\begin{document}") == 1) {
                 break;
@@ -113,7 +117,7 @@ public class ConspectAnalyzerImpl implements ConspectAnalyzer {
             } else {
                 for (int i = 0; i < endCount - beginCount; i++) {
                     if (nested.isEmpty()) {
-                        throw new ParseException("More \\end than \\begin", latexReader.linesRead());   // TODO: add info about conspectId in domain exception
+                        throw new ParseException("More \\end than \\begin", latexReader.linesRead());
                     }
                     int st = nested.removeLast();
                     if (charSum > parsingProperties.getMinTaskSize()) {
@@ -134,7 +138,7 @@ public class ConspectAnalyzerImpl implements ConspectAnalyzer {
                     charSum -= removeFirstN(lines, nested.getFirst() - first);
                 }
             }
-            logger.info("Nested tags parsed by the end of conspect parsing: {}", nested);
+            logger.debug("Nested tags parsed by the end of conspect parsing: {}", nested);
         }
         latexReader.close();
         if (!nested.isEmpty()) {

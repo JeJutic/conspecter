@@ -3,8 +3,6 @@ package pan.artem.conspecterrepo.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import pan.artem.conspecterrepo.service.RepoInitializer;
 
@@ -13,11 +11,10 @@ import pan.artem.conspecterrepo.service.RepoInitializer;
 @RequestMapping("/api")
 public class RepoInitializationController {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
     private final RepoInitializer repoInitializer;
 
     @Operation(
-            summary = "Clones or pulls specified repository and initializes its conspects",
+            summary = "Clones specified repository and initializes its conspects",
             responses = {
                     @ApiResponse(
                             responseCode = "200",

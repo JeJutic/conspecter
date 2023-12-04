@@ -17,7 +17,8 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public boolean register(String username, String password) {
-        if (userRepository.findByName(username) != null) {
+        if (userRepository.findByName(username) != null
+                || username.isEmpty() || password.isEmpty()) {
             return false;
         }
 

@@ -3,9 +3,10 @@ package pan.artem.conspecterweb.controller;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import pan.artem.conspecterweb.dto.Task;
 import pan.artem.conspecterweb.service.RepositoryServiceClient;
 
@@ -19,12 +20,12 @@ public class TaskController {
     private final RepositoryServiceClient repositoryServiceClient;
 
     @GetMapping("/{repoName}/{conspectName}")
-    public String showTask(
+    public ModelAndView showTask(
             Principal principal,
             @PathVariable("repoName") String repoName,
-            @PathVariable("conspectName") String conspectName,
-            Model model
+            @PathVariable("conspectName") String conspectName
     ) {
+        ModelAndView model = new ModelAndView();
         String username = principal.getName();
         var currentTask = repositoryServiceClient.getCurrentTask(username);
         Task task = currentTask.orElseGet(
@@ -33,34 +34,40 @@ public class TaskController {
                 )
         );
         if (task == null) {
-            return "no_task_found";
+            model.setStatus(HttpStatus.NOT_FOUND);
+            model.setViewName("no_task_found");
+            return model;
         }
-        model.addAttribute("task", task);
-        return "task";
+        model.addObject("task", task);
+        model.setViewName("task");
+        return model;
     }
 
     @PostMapping("/*/*")
-    public String showResult(
+    public ModelAndView showResult(
             Principal principal,
-            @RequestParam("solution") String solution,
-            Model model
+            @RequestParam("solution") String solution
     ) {
+        ModelAndView model = new ModelAndView();
         String username = principal.getName();
         logger.debug("username: {}, solution: {}", username, solution);
 
         var currentTask = repositoryServiceClient.getCurrentTask(username);
         if (currentTask.isEmpty()) {
-            return "no_task_found";
+            model.setStatus(HttpStatus.NOT_FOUND);
+            model.setViewName("no_task_found");
+            return model;
         }
         var solvedTask = repositoryServiceClient.sendSolution(username, solution);
 
-        model.addAttribute("task", currentTask.get());
-        model.addAttribute("solution", solution);
-        model.addAttribute("solvedTask", solvedTask);
+        model.addObject("task", currentTask.get());
+        model.addObject("solution", solution);
+        model.addObject("solvedTask", solvedTask);
 
         String result = solvedTask.status() ? "Success!" : "Failure";
-        model.addAttribute("result", result);
+        model.addObject("result", result);
 
-        return "task_result";
+        model.setViewName("task_result");
+        return model;
     }
 }
