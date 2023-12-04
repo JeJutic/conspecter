@@ -64,4 +64,49 @@ class ConspectAnalyzerImplTest {
 
         file.delete();
     }
+
+    @Test
+    void analyzeNoEnd() throws IOException {
+        File file = File.createTempFile("temp", "");
+        Files.writeString(file.toPath(), """
+\\documentclass{article}
+\\usepackage{graphicx}
+
+\\begin{document}
+    \\begin{block}
+        \\begin{exercise*}
+            so many text so many text and f0rmUl@s 2 here it is 214321 sdf+ kasld;l
+        \\end{exercise*}
+
+        \\begin{solution*}
+            2 here it is 214321 sdf+ kasld;l so many text so many text and f0rmUl@S
+        \\end{solution*}
+\\end{document}
+                                """);
+
+        assertThrows(ParseException.class, () -> conspectAnalyzer.analyze(file));
+        file.delete();
+    }
+
+    @Test
+    void analyzeNoBeginDocument() throws IOException {
+        File file = File.createTempFile("temp", "");
+        Files.writeString(file.toPath(), """
+\\documentclass{article}
+\\usepackage{graphicx}
+
+    \\begin{block}
+        \\begin{exercise*}
+            so many text so many text and f0rmUl@s 2 here it is 214321 sdf+ kasld;l
+        \\end{exercise*}
+
+        \\begin{solution*}
+            2 here it is 214321 sdf+ kasld;l so many text so many text and f0rmUl@S
+        \\end{solution*}
+\\end{document}
+                                """);
+
+        assertThrows(ParseException.class, () -> conspectAnalyzer.analyze(file));
+        file.delete();
+    }
 }
