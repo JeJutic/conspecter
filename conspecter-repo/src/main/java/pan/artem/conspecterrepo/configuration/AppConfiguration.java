@@ -7,7 +7,8 @@ import pan.artem.conspecterrepo.properties.AppProperties;
 
 @Configuration
 @EnableConfigurationProperties({
-        AppProperties.class
+        AppProperties.class,
+        AppProperties.ParsingProperties.class
 })
 @EnableScheduling
 public class AppConfiguration {

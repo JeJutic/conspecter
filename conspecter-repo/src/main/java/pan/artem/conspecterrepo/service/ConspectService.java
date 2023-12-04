@@ -1,6 +1,6 @@
 package pan.artem.conspecterrepo.service;
 
-import dto.ConspectDto;
+import dto.outer.ConspectDto;
 
 import java.util.List;
 

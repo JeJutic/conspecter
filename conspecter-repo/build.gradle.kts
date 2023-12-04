@@ -2,6 +2,7 @@ plugins {
 	java
 	id("org.springframework.boot") version "3.2.0"
 	id("io.spring.dependency-management") version "1.1.4"
+	id("jacoco")
 }
 
 group = "pan.artem"
@@ -29,6 +30,8 @@ dependencies {
 	implementation("org.liquibase:liquibase-core:4.24.0")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.3")
 	implementation("io.swagger.core.v3:swagger-annotations:2.2.15")
+	implementation("commons-io:commons-io:2.15.1")
+	implementation("org.eclipse.jgit:org.eclipse.jgit:6.7.0.202309050840-r")
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("org.postgresql:postgresql")
 	annotationProcessor("org.projectlombok:lombok")
@@ -39,6 +42,12 @@ dependencies {
 	testImplementation("org.testcontainers:junit-jupiter")
 }
 
+jacoco {
+	toolVersion = "0.8.7"
+	reportsDirectory.set(layout.buildDirectory.dir("jacoco"))
+}
+
 tasks.withType<Test> {
 	useJUnitPlatform()
+	finalizedBy(tasks.jacocoTestReport)
 }

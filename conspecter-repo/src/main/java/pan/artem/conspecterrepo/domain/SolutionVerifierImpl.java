@@ -1,24 +1,30 @@
 package pan.artem.conspecterrepo.domain;
 
-import dto.SolvedTask;
+import dto.outer.SolvedTask;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
 
 @Component
 public class SolutionVerifierImpl implements SolutionVerifier {
 
     @Override
     public SolvedTask verify(String answer, String solution) {
-        String[] rightWords = answer.split("\\s");
-        var solved = solution.split("\\s");
+        var rightWords = Arrays.stream(answer.split("\\s"))
+                .filter(s -> !s.isEmpty())
+                .toList();
+        var solved = Arrays.stream(solution.split("\\s"))
+                .filter(s -> !s.isEmpty())
+                .toList();
 
         int score = 0;
-        for (int i = 0; i < Math.min(rightWords.length, solved.length); i++) {
-            if (rightWords[i].equals(solved[i])) {
+        for (int i = 0; i < Math.min(rightWords.size(), solved.size()); i++) {
+            if (rightWords.get(i).equals(solved.get(i))) {
                 score++;
             }
         }
-        boolean status = (double) score / rightWords.length > 0.7;
+        boolean status = (double) score / rightWords.size() > 0.7;
 
-        return new SolvedTask(answer, score, rightWords.length, status);
+        return new SolvedTask(answer, score, rightWords.size(), status);
     }
 }

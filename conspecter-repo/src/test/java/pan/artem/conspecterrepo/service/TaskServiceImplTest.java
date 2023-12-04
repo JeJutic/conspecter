@@ -1,40 +1,30 @@
 package pan.artem.conspecterrepo.service;
 
-import dto.SolvedTask;
-import dto.TaskDto;
+import dto.outer.SolvedTask;
+import dto.outer.TaskDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import pan.artem.conspecterrepo.TestDataSampleService;
 import pan.artem.conspecterrepo.exception.ResourceNotFoundException;
-import pan.artem.conspecterrepo.repository.ConspectRepository;
-import pan.artem.conspecterrepo.repository.RepoRepository;
 import pan.artem.conspecterrepo.repository.TaskRepository;
-import pan.artem.conspecterrepo.repository.UserRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static pan.artem.conspecterrepo.repository.ConspectRepositoryTest.initialData;
 
 @SpringBootTest
 class TaskServiceImplTest {
 
     @Autowired
-    private RepoRepository repoRepository;
-    @Autowired
-    private ConspectRepository conspectRepository;
-    @Autowired
     private TaskRepository taskRepository;
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private TaskServiceImpl taskService;
+    @Autowired
+    private TestDataSampleService testDataSampleService;
 
     @BeforeEach
     void setUp() {
-        userRepository.deleteAll();
-        repoRepository.deleteAll();
-
-        initialData(repoRepository, conspectRepository, taskRepository, userRepository);
+        testDataSampleService.setUp();
     }
 
     @Test

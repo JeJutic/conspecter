@@ -3,13 +3,7 @@ package pan.artem.conspecterrepo.repository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import pan.artem.conspecterrepo.entity.Conspect;
-import pan.artem.conspecterrepo.entity.Repository;
-import pan.artem.conspecterrepo.entity.Task;
-import pan.artem.conspecterrepo.entity.User;
-
-import java.util.HashSet;
-import java.util.Set;
+import pan.artem.conspecterrepo.TestDataSampleService;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,55 +11,13 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ConspectRepositoryTest {
 
     @Autowired
-    private RepoRepository repoRepository;
-    @Autowired
     private ConspectRepository conspectRepository;
     @Autowired
-    private TaskRepository taskRepository;
-    @Autowired
-    private UserRepository userRepository;
-
-    public static void initialData(RepoRepository repoRepository,
-                                   ConspectRepository conspectRepository,
-                                   TaskRepository taskRepository,
-                                   UserRepository userRepository
-    ) {
-        var repo = new Repository();
-        repo.setName("repo-name");
-        repo.setAuthor("repo-author");
-        repo = repoRepository.save(repo);
-
-        var conspect = new Conspect();
-        conspect.setName("conspect-name");
-        conspect.setRepository(repo);
-        conspect = conspectRepository.save(conspect);
-
-        var task1 = new Task();
-        task1.setText("task1-text");
-        task1.setAnswer("task1 answer");
-        task1.setConspect(conspect);
-        taskRepository.save(task1);
-
-        var task2 = new Task();
-        task2.setText("task2-text");
-        task2.setAnswer("task2 answer");
-        task2.setConspect(conspect);
-        taskRepository.save(task2);
-
-        var user = new User();
-        user.setName("user");
-        Set<Task> tasksCompleted = new HashSet<>();
-        tasksCompleted.add(task1);
-        user.setTasksCompleted(tasksCompleted);
-        userRepository.save(user);
-    }
+    private TestDataSampleService testDataSampleService;
 
     @BeforeEach
     void setUp() {
-        userRepository.deleteAll();
-        repoRepository.deleteAll();
-
-        initialData(repoRepository, conspectRepository, taskRepository, userRepository);
+        testDataSampleService.setUp();
     }
 
     @Test

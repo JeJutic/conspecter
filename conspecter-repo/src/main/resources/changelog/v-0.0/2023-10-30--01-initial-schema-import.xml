@@ -17,12 +17,10 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar(50)">
-                <constraints nullable="false" unique="true"
-                             uniqueConstraintName="author-name_unique"/>
+                <constraints nullable="false" unique="true"/>
             </column>
             <column name="author" type="varchar(50)">
-                <constraints nullable="false" unique="true"
-                             uniqueConstraintName="author-name_unique"/>
+                <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
@@ -84,20 +82,20 @@
         </createTable>
     </changeSet>
 
-    <changeSet  id="test-values"  author="panart">
-        <insert tableName="repo">
-            <column name="name" value="logic"/>
-            <column name="author" value="shd"/>
-        </insert>
-        <insert tableName="conspect">
-            <column name="name" value="Yekaterinburg"/>
-            <column name="repo_id" value="1"/>
-        </insert>
-        <insert tableName="task">
-            <column name="text" value="yes it is"/>
-            <column name="answer" value="1"/>
-            <column name="conspect_id" value="1"/>
-        </insert>
-    </changeSet>
+<!--    <changeSet  id="test-values"  author="panart">-->
+<!--        <insert tableName="repo">-->
+<!--            <column name="name" value="logic"/>-->
+<!--            <column name="author" value="shd"/>-->
+<!--        </insert>-->
+<!--        <insert tableName="conspect">-->
+<!--            <column name="name" value="Yekaterinburg"/>-->
+<!--            <column name="repo_id" value="1"/>-->
+<!--        </insert>-->
+<!--        <insert tableName="task">-->
+<!--            <column name="text" value="yes it is"/>-->
+<!--            <column name="answer" value="1"/>-->
+<!--            <column name="conspect_id" value="1"/>-->
+<!--        </insert>-->
+<!--    </changeSet>-->
 
 </databaseChangeLog>

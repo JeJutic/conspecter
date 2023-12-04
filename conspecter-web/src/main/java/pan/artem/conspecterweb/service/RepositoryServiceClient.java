@@ -19,4 +19,6 @@ public interface RepositoryServiceClient {
     SolvedTask sendSolution(String username, String solution);
 
     Optional<Task> getCurrentTask(String username);
+
+    void uploadRepository(String author, String repoName, String url);
 }
