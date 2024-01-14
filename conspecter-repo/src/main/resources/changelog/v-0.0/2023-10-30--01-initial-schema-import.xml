@@ -31,13 +31,11 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar(50)">
-                <constraints nullable="false" unique="true"
-                             uniqueConstraintName="repo-name_unique"/>
+                <constraints nullable="false" unique="true"/>
             </column>
             <column name="repo_id" type="int">
                 <constraints foreignKeyName="fk_repo" references="repo(id)"
-                             deleteCascade="true"
-                             unique="true" uniqueConstraintName="repo-name_unique"/>
+                             deleteCascade="true"/>
             </column>
         </createTable>
     </changeSet>
