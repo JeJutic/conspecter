@@ -11,7 +11,16 @@
         </or>
     </preConditions>
 
-    <include file="v-0.0/changelog-v.0.0-cumulative.xml" relativeToChangelogFile="true"/>
-    <include file="v-0.1/changelog-v.0.1-cumulative.xml" relativeToChangelogFile="true"/>
+    <changeSet id="repo-name" author="panart">
+        <createIndex tableName="repo" indexName="repo_index" unique="true">
+            <column name="name"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="conspect-name" author="panart">
+        <createIndex tableName="conspect" indexName="conspect_index" unique="true">
+            <column name="name"/>
+        </createIndex>
+    </changeSet>
 
 </databaseChangeLog>
